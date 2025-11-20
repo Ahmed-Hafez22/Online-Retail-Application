@@ -42,6 +42,26 @@ db_cursor.execute("""
 
 """)
 
-db_cursor.execute("INSERT INTO storeStaff(name, role, email, password) VALUES('Ahmed Mohamed Ali', 'Manager', 'ahmed@gmail.com', 'bestManagerEver')")
+db_cursor.execute("""
+                CREATE TABLE IF NOT EXISTS pendingRequest(
+                  id INTEGER PRIMARY KEY,
+                  requestType TEXT,
+                  requestDetails TEXT
+                  )
+
+
+""")
+
+# db_cursor.execute("INSERT INTO storeStaff(name, role, email, password) VALUES('Ahmed Mohamed Ali', 'Manager', 'ahmed@gmail.com', 'bestManagerEver')")
+
+
+testPending = {
+    "Name" : "Ali",
+    "Email" : "ali@gmail.com",
+    "Password" : "worker1"
+}
+
+
+# db_cursor.execute("INSERT INTO pendingRequest(requestType, requestDetails) VALUES('storeStaff' , ?)", (json.dumps(testPending),))
 
 db_connection.commit()
