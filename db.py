@@ -59,11 +59,12 @@ db_cursor.execute("""
                   id INTEGER PRIMARY KEY,
                   sales INTEGER,
                   spentMoney INTEGER,
-                  totalNetWorth INTEGER
+                  totalNetWorth INTEGER,
+                  month TEXT
                   )
 
 
 
 """)
-db_cursor.execute("UPDATE products SET merchantPrice = 10 WHERE ProductID = '001'")
+
 db_connection.commit()

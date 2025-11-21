@@ -67,6 +67,29 @@ def restockProduct():
     newQuantity = int(input(f"Enter the new quantity of the {productName} you want: "))
 
     productPrice = db_cursor.execute("SELECT merchantPrice FROM products WHERE ProductID = ?", (productID,)).fetchone()[0] 
+    currentNetWorth = db_cursor.execute("SELECT totalNetWorth FROM financials").fetchone()[0]
+
+    if (currentNetWorth >= (newQuantity * productPrice)):
+        currentNetWorth -= (newQuantity * productPrice)
+        sales = (newQuantity * productPrice)
+        db_cursor.execute("UPDATE financials SET totalNetWorth = ? WHERE Month = ?", (currentNetWorth, ))
+        db_cursor.execute("UPDATE products SET quantity = ? WHERE productID = ?", (newQuantity, productID))
+    else:
+        print("Insufficient balance")
+    
+#-----------------------------------------------
+def intializeTable():
+    currentMonthYear = datetime.now().strftime("%m-%Y")
+
+    registeredMonthYear = db_cursor.execute("SELECT monthYear FROM financials").fetchone()
+
     
 
-restockProduct()
+    # if currentMonthYear in registeredMonthYear:
+    #     pass
+    # else:
+    #     db_cursor.execute("INSERT INTO financials(monthYear) Values(?)", (currentMonthYear,))
+
+    # db_connection.commit()
+
+intializeTable()
