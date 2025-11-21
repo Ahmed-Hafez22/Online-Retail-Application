@@ -43,4 +43,30 @@ def addEmployee():
             pass
 
 def registerProduct():
+
+    dict = {
+        "Name" : "", 
+        "Category" : "",
+        "ProductID": 0,
+        "Price" : 0
+    }
+
+    for key in dict.keys():
+        dict[key] = input(f"Enter the {key} of the product: ")
+
+    finalTuple = tuple(dict.values())
+    db_cursor.executemany("INSERT INTO products(Product, category, productID, price) VALUES(?,?,?,?)", (finalTuple,))
+    db_connection.commit()
+
+
+def restockProduct():
+    productID = input("Enter the ProdcutID of the product: ")
+
+    productName = db_cursor.execute("SELECT product FROM products WHERE productID = ?" , (productID,)).fetchone()[0]
+
+    newQuantity = int(input(f"Enter the new quantity of the {productName} you want: "))
+
+    productPrice = db_cursor.execute("SELECT merchantPrice FROM products WHERE ProductID = ?", (productID,)).fetchone()[0] 
     
+
+restockProduct()
